@@ -1,36 +1,30 @@
-import { SendMail } from "./components/mailer.js";
+// could wrap all of this in a class or an object and expand on the API to include all of the front-end API interactions (GET, PUT, POST for CMS etc)
 
-(() => {
-    const { createApp } = Vue
+// SendMail would be just one member / property in that object
 
-    createApp({
-        data() {
-            return {
-                message: 'Hello Vue!'
-            }
-        },
+async function SendMail(targetForm) {
+    // mail stuff goes here
+    let formData = new FormData(targetForm),
+        formFieldErrors = false;
 
-        methods: {
-            processMailFailure(result) {
-                // show a failure message in the UI
-                // use this.$refs to connect to the elements on the page and mark any empty fields/inputs with an error class
-                alert('failure! and if you keep using an alert, DOUBLE failure!');        
-                // show some errors in the UI here to let the user know the mail attempt was successful
-            },
-
-            processMailSuccess(result) {
-                // show a success message in the UI
-                alert("success! but don't EVER use alerts. They are gross.");        
-                // show some UI here to let the user know the mail attempt was successful
-            },
-
-            processMail(event) {    
-                debugger;    
-                // use the SendMail component to process mail
-                SendMail(this.$el.parentNode)
-                    .then(data => this.processMailSuccess(data))
-                    .catch(err => this.processMailFailure(err));
-            }
+    let result = await fetch(`./${targetForm.getAttribute("action")}`, {
+        method: targetForm.method,
+        body: formData,
+    }).then(response => {
+        if (response.status !== 200) {
+            formFieldErrors = true;
         }
-    }).mount('#mail-form')
-})();
+
+        return response;
+    })
+
+    let mailStatus = await result.json();
+
+    if (formFieldErrors) {
+        throw new Error(JSON.stringify(mailStatus));
+    }    
+    
+    return mailStatus;
+}
+
+export { SendMail };
