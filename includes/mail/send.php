@@ -46,16 +46,18 @@ if($_POST) {
     }
 //how to change this out and make this work
 $headers = "From: webmaster@alexlem.ca\r\n"."Reply-to: webmaster@alexlem.ca\r\n"."X-MAIL: PHP/".phpversion();
-
+    echo "<script>console.log('Debug Objects: " . $fail . "' );</script>";    
     if(count($fail)==0){
         mail($visitor_email, $subject, $message, $headers);
         $results['message'] = sprintf("Thank you for contacting me, %s. We will respnd within 24 hours.", $visitor_name);
     }else{
         header("HTTP/1.1 488 You Did NOT fill out the form correctly");
+        echo "<script>console.log('Debug Objects: " . $fail . "' );</script>";
         die(json_encode(['message'=> $fail]));
+        //die(json_encode($fail));
     }
 }else{
-    $result['message'] = "sorry message could not be submited";
+    $results['message'] = "sorry message could not be submited";
 }
 echo json_encode($results);
 

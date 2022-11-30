@@ -11,9 +11,9 @@
 <body>
     <main>
         <h1 class="hidden">Mail Reference for API Processing</h1>
-        <h2>Some Generic Contact Message Here</h2>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis quae aliquid eaque numquam facere ratione molestiae temporibus quibusdam, dolor voluptatibus cupiditate sed error expedita assumenda. Vitae nulla recusandae minima inventore?
+        <h2>Contact me!</h2>
+        <p id="result">
+            
         </p>
 
         <hr class="separator">
@@ -22,10 +22,10 @@
 
         <form action="includes/mail/send.php" method="POST" id="mail-form">
             <label for="firstname">First Name</label>
-            <input ref="fname" type="text" id="firstname" name="firstname" required="required">
+            <input ref="firstname" type="text" id="firstname" name="firstname" required="required">
 
             <label for="lastname">Last Name</label>
-            <input ref="lname" type="text" id="lastname" name="lastname" required>
+            <input ref="lastname" type="text" id="lastname" name="lastname" required>
 
             <label for="email">Email</label>
             <input ref="email" type="email" id="email" name="email" required>
@@ -39,7 +39,7 @@
             <div class="wrapper">
                 <input @click.prevent="processMail" type="submit" class="submit" value="Go!">
                 <i class="fas fa-paper-plane"></i>
-            </div>                              
+            </div>
         </form>
     </main>
 

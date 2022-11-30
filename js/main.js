@@ -2,12 +2,17 @@ import { SendMail } from "./components/mailer.js";
 
 (() => {
     const { createApp } = Vue
+    let outcomes = [
+                    'Thank you for contcting us! We will respond within 24 hours!',
+                    'Sorry, your message could not be delivered. Please fill out the following fields: '
+                ];
 
+    let text = document.getElementById('result');
+    
     createApp({
         data() {
             return {
                 message: 'Hello Vue!',
-                
             }
         },
 
@@ -24,16 +29,20 @@ import { SendMail } from "./components/mailer.js";
                     this.$refs[field].classList.add('error');
                 });
                 debugger;
-                let messageResult = document.querySelector('outcome');
-                messageResult.textContent = "success";
+                
+                
+                text.textContent = outcomes[1] + fields;
+                
 
 
             },
 
             processMailSuccess(result) {
                 // show a success message in the UI
-                
-                this.$refs['outcome'].textContent = text[1];      
+                debugger;
+                text.textContent = outcomes[0];
+
+                      
                 // show some UI here to let the user know the mail attempt was successful
             },
 
