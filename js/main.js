@@ -1,4 +1,6 @@
 import { SendMail } from "./components/mailer.js";
+import popup from "./components/popup.js";
+//import popup from './components/popup.js';
 
 (() => {
     const { createApp } = Vue
@@ -8,13 +10,19 @@ import { SendMail } from "./components/mailer.js";
                 ];
 
     let text = document.getElementById('result');
+    let popup = document.getElementById('popup');
     
     createApp({
         data() {
             return {
                 message: 'Hello Vue!',
+                //showPopup: false
             }
         },
+
+        //components: {
+            //thepopup: popup
+        //},
 
         methods: {
             processMailFailure(result) {
@@ -33,15 +41,23 @@ import { SendMail } from "./components/mailer.js";
                 
                 text.textContent = outcomes[1] + fields;
                 
+                
+                
 
+            },
 
+            closePopup() {
+                popup.classList.remove('open-popup')
             },
 
             processMailSuccess(result) {
                 // show a success message in the UI
                 debugger;
                 text.textContent = outcomes[0];
-
+                popup.classList.add('open-popup');
+                let closeBtn = document.getElementById('close');
+                closeBtn.addEventListener("click", this.closePopup)
+                //this.showPopup = true;
                       
                 // show some UI here to let the user know the mail attempt was successful
             },
